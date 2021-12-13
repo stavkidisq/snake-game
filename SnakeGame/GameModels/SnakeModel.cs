@@ -12,21 +12,32 @@ namespace SnakeGame
     {
         public List<PointModel> SnakeLine = new List<PointModel>();
         public bool Health { get; set; } = true;
-        public int Speed { get; set; }
+        public int Speed { get; set; } = 500;
 
         public SnakeModel(List<PointModel> snakeLine, int speed)
         {
             SnakeLine = snakeLine;
             Health = true;
             Speed = speed;
+
+            if(SnakeLine.Count > 0)
+            {
+                foreach (var point in SnakeLine.ToList())
+                {
+                    Console.SetCursorPosition(point.Position_X, point.Position_Y);
+                    Console.WriteLine('*');
+                }
+            }
         }
 
-        public void TryEateApple(AppleModel apple)
+        public bool TryEatApple(AppleModel apple)
         {
             if (SnakeLine.Last().Position_X == apple.Position_X && SnakeLine.Last().Position_Y == apple.Position_Y)
             {
-                apple.IsEaten = true;
+                return true;
             }
+
+            return false;
         }
 
         public bool CheckSnakeCollision()
@@ -53,12 +64,23 @@ namespace SnakeGame
             return false;
         }
 
+        public void AddSnakePoint()
+        {
+            SnakeLine.Add
+                (new PointModel(SnakeLine.Last().Position_X, SnakeLine.Last().Position_Y));
+        }
+
         public void Turn(int offset_X, int offset_Y)
         {
-            GameDisplay.PointDestructiuon(this);
+            Console.SetCursorPosition(SnakeLine.First().Position_X, SnakeLine.First().Position_Y);
+            Console.WriteLine(' ');
+
             SnakeLine.Remove(SnakeLine.First());
             SnakeLine.Add(new PointModel(offset_X, offset_Y));
-            GameDisplay.PointCreation(this);
+
+            Console.SetCursorPosition(SnakeLine.Last().Position_X, SnakeLine.Last().Position_Y);
+            Console.WriteLine('*');
+
             Thread.Sleep(Speed);
         }
 

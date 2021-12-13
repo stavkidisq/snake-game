@@ -11,13 +11,22 @@ namespace SnakeGame.GameModels
         public int Position_X { get; set; }
         public int Position_Y { get; set; }
         public char Skin { get; set; }
-        public bool IsEaten { get; set; } = false;
 
-        public AppleModel(SurfaceModel surface, char skin)
+        public AppleModel(SurfaceModel surface, SnakeModel snakeModel, char skin)
         {
             Position_X = new Random().Next(5, surface.Width - 5);
             Position_Y = new Random().Next(5, surface.Height - 5);
             Skin = skin;
+
+            if(Skin != '\0' || Skin != ' ')
+            {
+                do
+                {
+                    Console.SetCursorPosition(Position_X, Position_Y);
+                    Console.WriteLine(Skin);
+                }
+                while (snakeModel.CheckAppleCollision(this));
+            }
         }
     }
 }

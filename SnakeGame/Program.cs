@@ -1,5 +1,4 @@
 ﻿using SnakeGame;
-using SnakeGame.GameLogic;
 using SnakeGame.GameModels;
 using System;
 
@@ -26,49 +25,41 @@ namespace System
                     new PointModel(8, 10),
                     new PointModel(9, 10)
                 }, 300);
-
             SurfaceModel surfaceModel = new SurfaceModel(20, 20);
-            AppleModel appleModel;
-
-            do
-            {
-                appleModel = new AppleModel(surfaceModel, '$');
-            }
-            while (snakeModel.CheckAppleCollision(appleModel));
-
-            GameDisplay.CreateSurface(surfaceModel);
-            GameDisplay.SpawnApple(appleModel);
-            GameDisplay.DisplayScore(surfaceModel);
-            GameDisplay.SpawnSnake(snakeModel);
+            AppleModel appleModel = new AppleModel(surfaceModel, snakeModel, '$');
 
             ConsoleKey key = Console.ReadKey().Key;
 
-            while (GameLogic.CheckOnCollision(snakeModel, surfaceModel) && !snakeModel.CheckSnakeCollision())
+            while(!surfaceModel.CheckOnCollision(snakeModel) && !snakeModel.CheckSnakeCollision())
             {
-                GameDisplay.DisplayScore(surfaceModel);
-
                 if (Console.KeyAvailable)
                     key = Console.ReadKey().Key;
 
-                snakeModel.TryEateApple(appleModel);
+                snakeModel.TryEatApple(appleModel);
 
-                if (appleModel.IsEaten)
+                if(snakeModel.TryEatApple(appleModel))
                 {
-                    GameLogic.AddScore(surfaceModel);
-                     
-                    do
-                    {
-                        appleModel = new AppleModel(surfaceModel, '$');
-                    }
-                    while (snakeModel.CheckAppleCollision(appleModel));
+                    appleModel = new AppleModel(surfaceModel, snakeModel, '$');
+                    surfaceModel.Score++;
 
-                    GameDisplay.SpawnApple(appleModel);
-
-                    snakeModel.SnakeLine.Add
-                        (new PointModel(snakeModel.SnakeLine.Last().Position_X, snakeModel.SnakeLine.Last().Position_Y));
+                    snakeModel.AddSnakePoint();
                 }
 
-                GameLogic.SnakeTurnLogic(snakeModel, key);
+                switch (key)
+                {
+                    case ConsoleKey.UpArrow:
+                        snakeModel.ToUp();
+                        break;
+                    case ConsoleKey.DownArrow:
+                        snakeModel.ToDown();
+                        break;
+                    case ConsoleKey.LeftArrow:
+                        snakeModel.ToLeft();
+                        break;
+                    case ConsoleKey.RightArrow:
+                        snakeModel.ToRight();
+                        break;
+                }
             }
         }
     }
