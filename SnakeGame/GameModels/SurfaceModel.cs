@@ -8,8 +8,8 @@ namespace SnakeGame.GameModels
 {
     internal class SurfaceModel
     {
-        public int Width { get; set; }
-        public int Height { get; set; }
+        public int Width { get; private set; }
+        public int Height { get; private set; }
         public int Score { get; set; }
 
         public SurfaceModel(int width, int height)
@@ -17,29 +17,26 @@ namespace SnakeGame.GameModels
             Width = width;
             Height = height;
 
-            if(Width >= 10 && Height >= 10)
+            for (int i = 0; i < Width; i++)
             {
-                for (int i = 0; i < Width; i++)
-                {
-                    Console.SetCursorPosition(i, 0);
-                    Console.WriteLine("*");
+                Console.SetCursorPosition(i, 0);
+                Console.WriteLine("*");
 
-                    Console.SetCursorPosition(i, Height);
-                    Console.WriteLine("*");
-                }
-
-                for (int i = 0; i < Height; i++)
-                {
-                    Console.SetCursorPosition(0, i);
-                    Console.WriteLine("*");
-
-                    Console.SetCursorPosition(Width, i);
-                    Console.WriteLine("*");
-                }
-
-                Console.SetCursorPosition(Width + 5, 2);
-                Console.WriteLine($"Score: {Score}");
+                Console.SetCursorPosition(i, Height);
+                Console.WriteLine("*");
             }
+
+            for (int i = 0; i < Height; i++)
+            {
+                Console.SetCursorPosition(0, i);
+                Console.WriteLine("*");
+
+                Console.SetCursorPosition(Width, i);
+                Console.WriteLine("*");
+            }
+
+            Console.SetCursorPosition(Width + 5, 2);
+            Console.WriteLine($"Score: {Score}");
         }
 
         public void GetScore()

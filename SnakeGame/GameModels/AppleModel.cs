@@ -14,18 +14,19 @@ namespace SnakeGame.GameModels
 
         public AppleModel(SurfaceModel surface, SnakeModel snakeModel, char skin)
         {
-            Position_X = new Random().Next(5, surface.Width - 5);
-            Position_Y = new Random().Next(5, surface.Height - 5);
             Skin = skin;
 
-            if(Skin != '\0' || Skin != ' ')
+            if(surface != null && snakeModel != null) // not spawn apple when surface or snakemodel is null
             {
                 do
                 {
-                    Console.SetCursorPosition(Position_X, Position_Y);
-                    Console.WriteLine(Skin);
+                    Position_X = new Random().Next(5, surface.Width - 5);
+                    Position_Y = new Random().Next(5, surface.Height - 5);
                 }
-                while (snakeModel.CheckAppleCollision(this));
+                while(snakeModel.CheckAppleCollision(this));
+
+                Console.SetCursorPosition(Position_X, Position_Y);
+                Console.WriteLine(Skin);
             }
         }
     }

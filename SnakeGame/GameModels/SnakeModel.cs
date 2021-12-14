@@ -1,5 +1,4 @@
-﻿using SnakeGame.GameLogic;
-using SnakeGame.GameModels;
+﻿using SnakeGame.GameModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,23 +9,21 @@ namespace SnakeGame
 {
     internal class SnakeModel
     {
-        public List<PointModel> SnakeLine = new List<PointModel>();
-        public bool Health { get; set; } = true;
-        public int Speed { get; set; } = 500;
+        public List<PointModel> SnakeLine { get; set; }
+        public int Speed { get; set; }
 
         public SnakeModel(List<PointModel> snakeLine, int speed)
         {
             SnakeLine = snakeLine;
-            Health = true;
             Speed = speed;
 
-            if(SnakeLine.Count > 0)
+            if (SnakeLine == null)
+                SnakeLine = new List<PointModel>();
+
+            foreach (var point in SnakeLine.ToList())
             {
-                foreach (var point in SnakeLine.ToList())
-                {
-                    Console.SetCursorPosition(point.Position_X, point.Position_Y);
-                    Console.WriteLine('*');
-                }
+                Console.SetCursorPosition(point.Position_X, point.Position_Y);
+                Console.WriteLine('*');
             }
         }
 
