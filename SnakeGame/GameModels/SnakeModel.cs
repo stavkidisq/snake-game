@@ -37,30 +37,6 @@ namespace SnakeGame
             return false;
         }
 
-        public bool CheckSnakeCollision()
-        {
-            for (int i = 0; i < SnakeLine.Count - 1; i++)
-            {
-                if (SnakeLine.Last().Position_X == SnakeLine[i].Position_X && SnakeLine.Last().Position_Y == SnakeLine[i].Position_Y)
-                {
-                    return true;
-                }
-            }
-
-            return false;
-        }
-
-        public bool CheckAppleCollision(AppleModel apple)
-        {
-            foreach (var point in SnakeLine)
-            {
-                if (apple.Position_X == point.Position_X && apple.Position_Y == point.Position_Y)
-                    return true;
-            }
-
-            return false;
-        }
-
         public void AddSnakePoint()
         {
             SnakeLine.Add

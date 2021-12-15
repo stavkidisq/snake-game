@@ -17,6 +17,12 @@ namespace SnakeGame.GameModels
             Width = width;
             Height = height;
 
+            DisplaySurface();
+            GetScore();
+        }
+
+        private void DisplaySurface()
+        {
             for (int i = 0; i < Width; i++)
             {
                 Console.SetCursorPosition(i, 0);
@@ -34,28 +40,12 @@ namespace SnakeGame.GameModels
                 Console.SetCursorPosition(Width, i);
                 Console.WriteLine("*");
             }
-
-            Console.SetCursorPosition(Width + 5, 2);
-            Console.WriteLine($"Score: {Score}");
         }
 
         public void GetScore()
         {
             Console.SetCursorPosition(Width + 5, 2);
             Console.WriteLine($"Score: {Score}");
-        }
-
-        public bool CheckOnCollision(SnakeModel snakeModel)
-        {
-            if ((snakeModel.SnakeLine.Last().Position_X < 0) && (snakeModel.SnakeLine.Last().Position_X > Width)
-                && (snakeModel.SnakeLine.Last().Position_Y < 0) && (snakeModel.SnakeLine.Last().Position_Y > Height))
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
         }
     }
 }
