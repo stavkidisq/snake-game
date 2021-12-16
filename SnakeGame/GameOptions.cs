@@ -9,19 +9,29 @@ namespace SnakeGame
 {
     internal class GameOptions
     {
-        AppleModel Apple { get; set; }
-        SnakeModel Snake { get; set; }
-        SurfaceModel Surface { get; set; }
-        public bool TryRules() => true;
-        public List<PointModel> GetSnakeLine
+        private AppleModel? _appleModel;
+        private SnakeModel? _snakeModel;
+        private SurfaceModel? _surfaceModel;
+
+        private AppleModel Apple 
         {
-            get
-            {
-                if (Snake != null)
-                    return Snake.SnakeLine;
-                else
-                    throw new NullReferenceException();
-            }
+            get => (_appleModel != null) ? _appleModel : throw new NullReferenceException();
+            set => _appleModel = value;
+        }
+        private SnakeModel Snake 
+        {
+            get => (_snakeModel != null) ? _snakeModel : throw new NullReferenceException();
+            set => _snakeModel = value;
+        }
+        private SurfaceModel Surface 
+        {
+            get => (_surfaceModel != null) ? _surfaceModel : throw new NullReferenceException();
+            set => _surfaceModel = value;
+        }
+
+        private List<PointModel> GetSnakeLine 
+        {
+            get => (Snake.SnakeLine != null) ? Snake.SnakeLine : throw new NullReferenceException();  
         }
 
         public GameOptions(SnakeModel snakeModel, AppleModel appleModel,SurfaceModel surfaceModel)
@@ -30,7 +40,7 @@ namespace SnakeGame
             Surface = surfaceModel;
             Apple = appleModel;
 
-            ChangeApplePosition(Surface, Snake);
+            ChangeApplePosition();
             Apple.Display();
 
             PlaySnakeGame();
@@ -40,7 +50,7 @@ namespace SnakeGame
         {
             ConsoleKey key = Console.ReadKey().Key;
 
-            while (!CheckOnCollision(Snake) && !CheckSnakeCollision())
+            while (!CheckOnCollision() && !CheckSnakeCollision())
             {
                 if (Console.KeyAvailable)
                     key = Console.ReadKey().Key;
@@ -48,7 +58,7 @@ namespace SnakeGame
                 if (Snake.TryEatApple(Apple))
                 {
                     Apple = new AppleModel('$');
-                    ChangeApplePosition(Surface, Snake);
+                    ChangeApplePosition();
                     Apple.Display();
 
                     Surface.Score++;
@@ -77,20 +87,23 @@ namespace SnakeGame
                 case ConsoleKey.RightArrow:
                     Snake.ToRight();
                     break;
+                default:
+                    EndSnakeGame();
+                    break;
             }
         }
 
-        private void ChangeApplePosition(SurfaceModel surface, SnakeModel snakeModel)
+        private void ChangeApplePosition()
         {
             do
             {
-                Apple.Position_X = new Random().Next(5, surface.Width - 5);
-                Apple.Position_Y = new Random().Next(5, surface.Height - 5);
+                Apple.Position_X = new Random().Next(5, Surface.Width - 5);
+                Apple.Position_Y = new Random().Next(5, Surface.Height - 5);
             }
-            while (CheckAppleCollision(Apple));
+            while (CheckAppleCollision());
         }
 
-        public bool CheckOnCollision(SnakeModel snakeModel)
+        public bool CheckOnCollision()
         {
             if ((GetSnakeLine.Last().Position_X < 0) && (GetSnakeLine.Last().Position_X > Surface.Width)
                 && (GetSnakeLine.Last().Position_Y < 0) && (GetSnakeLine.Last().Position_Y > Surface.Height))
@@ -116,15 +129,20 @@ namespace SnakeGame
             return false;
         }
 
-        public bool CheckAppleCollision(AppleModel apple)
+        public bool CheckAppleCollision()
         {
             foreach (var point in GetSnakeLine)
             {
-                if (apple.Position_X == point.Position_X && apple.Position_Y == point.Position_Y)
+                if (Apple.Position_X == point.Position_X && Apple.Position_Y == point.Position_Y)
                     return true;
             }
 
             return false;
+        }
+
+        public void EndSnakeGame()
+        {
+
         }
     }
 }
