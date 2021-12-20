@@ -16,12 +16,9 @@ namespace SnakeGame.GameModels
         {
             Width = width;
             Height = height;
-
-            DisplaySurface();
-            GetScore();
         }
 
-        private void DisplaySurface()
+        public void DisplaySurface()
         {
             for (int i = 0; i < Width; i++)
             {

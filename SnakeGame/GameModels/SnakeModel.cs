@@ -19,7 +19,10 @@ namespace SnakeGame
 
             if (SnakeLine == null)
                 SnakeLine = new List<PointModel>();
+        }
 
+        public void DisplaySnake()
+        {
             foreach (var point in SnakeLine.ToList())
             {
                 Console.SetCursorPosition(point.Position_X, point.Position_Y);

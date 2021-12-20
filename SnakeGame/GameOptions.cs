@@ -40,17 +40,46 @@ namespace SnakeGame
             Surface = surfaceModel;
             Apple = appleModel;
 
-            ChangeApplePosition();
-            Apple.Display();
+            if(GameDisplay())
+            {
+                Console.Clear();
+                ChangeApplePosition();
 
-            PlaySnakeGame();
+                Surface.DisplaySurface();
+                Snake.DisplaySnake();
+                Surface.GetScore();
+                Apple.Display();
+                PlaySnakeGame();
+            }
+        }
+
+        public bool GameDisplay()
+        {
+            Console.WriteLine("The game - 'Snake'.\n");
+            Console.WriteLine("1. Play the game!\n");
+            Console.WriteLine("Snake Pre-Alpha v0.1.0");
+
+            var k = Console.ReadLine();
+
+            if (k != null)
+                return StartGame(k);
+            else
+                return false;
+        }
+
+        public bool StartGame(string k)
+        {
+            if (k == "1")
+                return true;
+            else
+                return false;
         }
 
         public void PlaySnakeGame()
         {
             ConsoleKey key = Console.ReadKey().Key;
 
-            while (!CheckOnCollision() && !CheckSnakeCollision())
+            while (!CheckSurfaceCollision() && !CheckSnakeCollision())
             {
                 if (Console.KeyAvailable)
                     key = Console.ReadKey().Key;
@@ -87,9 +116,6 @@ namespace SnakeGame
                 case ConsoleKey.RightArrow:
                     Snake.ToRight();
                     break;
-                default:
-                    EndSnakeGame();
-                    break;
             }
         }
 
@@ -103,10 +129,10 @@ namespace SnakeGame
             while (CheckAppleCollision());
         }
 
-        public bool CheckOnCollision()
+        public bool CheckSurfaceCollision()
         {
-            if ((GetSnakeLine.Last().Position_X < 0) && (GetSnakeLine.Last().Position_X > Surface.Width)
-                && (GetSnakeLine.Last().Position_Y < 0) && (GetSnakeLine.Last().Position_Y > Surface.Height))
+            if ((GetSnakeLine.Last().Position_X <= 0) || (GetSnakeLine.Last().Position_X >= Surface.Width)
+                || (GetSnakeLine.Last().Position_Y <= 0) || (GetSnakeLine.Last().Position_Y >= Surface.Height))
             {
                 return true;
             }
@@ -138,11 +164,6 @@ namespace SnakeGame
             }
 
             return false;
-        }
-
-        public void EndSnakeGame()
-        {
-
         }
     }
 }
