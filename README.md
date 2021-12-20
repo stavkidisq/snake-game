@@ -1,6 +1,12 @@
 # SnakeGame - Game: "Snake"
+[![Last commit](https://img.shields.io/github/last-commit/Stavkidisq/SnakeGame)]()
+[![Commit activity](https://img.shields.io/github/commit-activity/y/Stavkidisq/SnakeGame)]()
 [![Github All Releases](https://img.shields.io/github/downloads/Stavkidisq/SnakeGame/total.svg)]()
 [![Build Status](https://travis-ci.com/username/projectname.svg?branch=master)](https://travis-ci.com/Stavkidisq/SnakeGame)
+[![Code Size](https://img.shields.io/github/languages/code-size/Stavkidisq/SnakeGame)]()
+[![Repo Size](https://img.shields.io/github/repo-size/Stavkidisq/SnakeGame)]()
+[![GitHub watchers](https://img.shields.io/github/watchers/Stavkidisq/SnakeGame?style=social)]()
+[![Twitter follow](https://img.shields.io/twitter/follow/stavkidisq?style=social)]()
 ## :snowflake:Brief description of the program.
 This game is based on the fact that the player controls a character (a snake), on a field fenced with walls. Objects called apples are spawned on it. If the snake eats an apple, its length will increase. Also, the game keeps an account of the apples eaten, for one apple eaten, the player is awarded one point. If the snake's head collides with its tail or with a wall, then the game is over.
 <br>
