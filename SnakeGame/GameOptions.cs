@@ -7,6 +7,12 @@ using System.Threading.Tasks;
 
 namespace SnakeGame
 {
+    enum GameOption
+    {
+        STARTGAME,
+        EXITGAME,
+        INCORRECT
+    }
     internal class GameOptions
     {
         private AppleModel? _appleModel;
@@ -40,39 +46,24 @@ namespace SnakeGame
             Surface = surfaceModel;
             Apple = appleModel;
 
-            if(GameDisplay())
-            {
-                Console.Clear();
-                ChangeApplePosition();
+            Console.Clear();
+            ChangeApplePosition();
 
-                Surface.DisplaySurface();
-                Snake.DisplaySnake();
-                Surface.GetScore();
-                Apple.Display();
-                PlaySnakeGame();
-            }
+            Surface.DisplaySurface();
+            Snake.DisplaySnake();
+            Surface.GetScore();
+            Apple.Display();
+
+            PlaySnakeGame();
+            EndGame();
         }
 
-        public bool GameDisplay()
+        public void EndGame()
         {
-            Console.WriteLine("The game - 'Snake'.\n");
-            Console.WriteLine("1. Play the game!\n");
-            Console.WriteLine("Snake Pre-Alpha v0.1.0");
-
-            var k = Console.ReadLine();
-
-            if (k != null)
-                return StartGame(k);
-            else
-                return false;
-        }
-
-        public bool StartGame(string k)
-        {
-            if (k == "1")
-                return true;
-            else
-                return false;
+            Console.Clear();
+            Console.WriteLine("Game over!");
+            Console.WriteLine("Press any key to go to the main menu...");
+            Console.ReadKey();
         }
 
         public void PlaySnakeGame()
