@@ -13,6 +13,7 @@ namespace SnakeGame
         EXITGAME,
         INCORRECT
     }
+
     internal class GameOptions
     {
         private AppleModel? _appleModel;
@@ -54,7 +55,7 @@ namespace SnakeGame
             Surface.GetScore();
             Apple.Display();
 
-            PlaySnakeGame();
+            PlayClassicSnakeGame();
             EndGame();
         }
 
@@ -66,7 +67,8 @@ namespace SnakeGame
             Console.ReadKey();
         }
 
-        public void PlaySnakeGame()
+        //ClassicGameOptions
+        public void PlayClassicSnakeGame()
         {
             ConsoleKey key = Console.ReadKey().Key;
 
@@ -80,6 +82,7 @@ namespace SnakeGame
                     Apple = new AppleModel('$');
                     ChangeApplePosition();
                     Apple.Display();
+                    GetSnakeHeadCoordinates();
 
                     Surface.Score++;
                     Surface.GetScore();
@@ -155,6 +158,16 @@ namespace SnakeGame
             }
 
             return false;
+        }
+
+        public void GetSnakeHeadCoordinates()
+        {
+            Console.SetCursorPosition(Surface.Width + 5, 4);
+            Console.WriteLine($"snake:                   ");
+
+            Console.SetCursorPosition(Surface.Width + 5, 4);
+            Console.WriteLine
+                ($"snake head: {Snake.SnakeLine.Last().Position_X} {Snake.SnakeLine.Last().Position_Y}");
         }
     }
 }

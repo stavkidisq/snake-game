@@ -9,8 +9,9 @@ namespace System
         public static void GameDisplay()
         {
             Console.WriteLine("Welcome int the game - 'Snake'.\n");
-            Console.WriteLine("1. Play the game!\n");
-            Console.WriteLine("2. Exit from game\n");
+            Console.WriteLine("1. Play the classic snake!\n");
+            Console.WriteLine("2. Play the snake for speed\n");
+            Console.WriteLine("3. Exit from game\n");
             Console.WriteLine("Snake Pre-Alpha v0.1.0");
         }
 
