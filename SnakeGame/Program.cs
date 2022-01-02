@@ -4,27 +4,33 @@ using System;
 
 namespace System
 {
+    enum GameOption
+    {
+        GAMEMODES,
+        EXITGAME,
+        INCORRECT
+    }
+
     class Program
     {
-        public static void GameDisplay()
+        public static void DisplayGameOptions()
         {
             Console.WriteLine("Welcome int the game - 'Snake'.\n");
-            Console.WriteLine("1. Play the classic snake!\n");
-            Console.WriteLine("2. Play the snake for speed\n");
-            Console.WriteLine("3. Exit from game\n");
-            Console.WriteLine("Snake Pre-Alpha v0.1.0");
+            Console.WriteLine("1. Start game!\n");
+            Console.WriteLine("2. Exit from game\n");
+            Console.WriteLine("Snake v0.1.1-Alpha");
         }
 
         public static GameOption InputGameOptions()
         {
             Console.Clear();
-            GameDisplay();
+            DisplayGameOptions();
 
             var key = Console.ReadKey().Key;
 
             if (key == ConsoleKey.D1)
             {
-                return GameOption.STARTGAME;
+                return GameOption.GAMEMODES;
             }
             else if (key == ConsoleKey.D2)
             {
@@ -35,15 +41,24 @@ namespace System
                 return GameOption.INCORRECT;
             }
         }
-
         static void Main()
-        {
-            while (InputGameOptions() == GameOption.STARTGAME)
+        {            
+            while(true)
             {
-                List<PointModel> points = new List<PointModel>() { new PointModel(6, 2), new PointModel(6, 3), new PointModel(6, 4) };
+                DisplayGameOptions();
+                var choice1 = InputGameOptions();
 
-                new GameOptions
-                    (new SnakeModel(points, 300), new AppleModel('$'), new SurfaceModel(20, 20));
+                if(choice1 == GameOption.GAMEMODES)
+                {
+                    List<PointModel> points =
+                        new List<PointModel>() { new PointModel(6, 2), new PointModel(6, 3), new PointModel(6, 4) };
+
+                    new GameManagement(new SnakeModel(points, 300), new SurfaceModel(20, 20), new AppleModel('$'));
+                }
+                else
+                {
+                    break;
+                }
             }
         }
     }

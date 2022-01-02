@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SnakeGame.GameModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,9 +9,22 @@ namespace SnakeGame.GameModes
 {
     internal class BlockGameOptions : GameOptions
     {
-        public BlockGameOptions()
+        public BlockGameOptions(SnakeModel snakeModel, SurfaceModel surfaceModel, AppleModel appleModel)
         {
+            Snake = snakeModel;
+            Surface = surfaceModel;
+            Apple = appleModel;
 
+            Console.Clear();
+            ChangeApplePosition();
+
+            Surface.DisplaySurface();
+            Snake.DisplaySnake();
+            Surface.GetScore();
+            Apple.Display();
+
+            //PlayClassicSnakeGame();
+            EndGame();
         }
     }
 }

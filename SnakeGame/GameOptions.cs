@@ -7,59 +7,34 @@ using System.Threading.Tasks;
 
 namespace SnakeGame
 {
-    enum GameOption
+    internal abstract class GameOptions
     {
-        STARTGAME,
-        EXITGAME,
-        INCORRECT
-    }
+        protected AppleModel? _appleModel;
+        protected SnakeModel? _snakeModel;
+        protected SurfaceModel? _surfaceModel;
 
-    internal class GameOptions
-    {
-        private AppleModel? _appleModel;
-        private SnakeModel? _snakeModel;
-        private SurfaceModel? _surfaceModel;
-
-        private AppleModel Apple 
+        protected AppleModel Apple 
         {
             get => (_appleModel != null) ? _appleModel : throw new NullReferenceException();
             set => _appleModel = value;
         }
-        private SnakeModel Snake 
+        protected SnakeModel Snake 
         {
             get => (_snakeModel != null) ? _snakeModel : throw new NullReferenceException();
             set => _snakeModel = value;
         }
-        private SurfaceModel Surface 
+        protected SurfaceModel Surface 
         {
             get => (_surfaceModel != null) ? _surfaceModel : throw new NullReferenceException();
             set => _surfaceModel = value;
         }
 
-        private List<PointModel> GetSnakeLine 
+        protected List<PointModel> GetSnakeLine 
         {
             get => (Snake.SnakeLine != null) ? Snake.SnakeLine : throw new NullReferenceException();  
         }
 
-        public GameOptions(SnakeModel snakeModel, AppleModel appleModel,SurfaceModel surfaceModel)
-        {
-            Snake = snakeModel;
-            Surface = surfaceModel;
-            Apple = appleModel;
-
-            Console.Clear();
-            ChangeApplePosition();
-
-            Surface.DisplaySurface();
-            Snake.DisplaySnake();
-            Surface.GetScore();
-            Apple.Display();
-
-            PlayClassicSnakeGame();
-            EndGame();
-        }
-
-        public void EndGame()
+        protected void EndGame()
         {
             Console.Clear();
             Console.WriteLine("Game over!");
@@ -67,34 +42,7 @@ namespace SnakeGame
             Console.ReadKey();
         }
 
-        //ClassicGameOptions
-        public void PlayClassicSnakeGame()
-        {
-            ConsoleKey key = Console.ReadKey().Key;
-
-            while (!CheckSurfaceCollision() && !CheckSnakeCollision())
-            {
-                if (Console.KeyAvailable)
-                    key = Console.ReadKey().Key;
-
-                if (Snake.TryEatApple(Apple))
-                {
-                    Apple = new AppleModel('$');
-                    ChangeApplePosition();
-                    Apple.Display();
-                    GetSnakeHeadCoordinates();
-
-                    Surface.Score++;
-                    Surface.GetScore();
-
-                    Snake.AddSnakePoint();
-                }
-
-                Control(key);
-            }
-        }
-
-        public void Control(ConsoleKey key)
+        protected void Control(ConsoleKey key)
         {
             switch (key)
             {
@@ -113,7 +61,7 @@ namespace SnakeGame
             }
         }
 
-        private void ChangeApplePosition()
+        protected void ChangeApplePosition()
         {
             do
             {
@@ -123,7 +71,7 @@ namespace SnakeGame
             while (CheckAppleCollision());
         }
 
-        public bool CheckSurfaceCollision()
+        protected bool CheckSurfaceCollision()
         {
             if ((GetSnakeLine.Last().Position_X <= 0) || (GetSnakeLine.Last().Position_X >= Surface.Width)
                 || (GetSnakeLine.Last().Position_Y <= 0) || (GetSnakeLine.Last().Position_Y >= Surface.Height))
@@ -136,7 +84,7 @@ namespace SnakeGame
             }
         }
 
-        public bool CheckSnakeCollision()
+        protected bool CheckSnakeCollision()
         {
             for (int i = 0; i < Snake.SnakeLine.Count - 1; i++)
             {
@@ -149,7 +97,7 @@ namespace SnakeGame
             return false;
         }
 
-        public bool CheckAppleCollision()
+        protected bool CheckAppleCollision()
         {
             foreach (var point in GetSnakeLine)
             {
@@ -160,7 +108,7 @@ namespace SnakeGame
             return false;
         }
 
-        public void GetSnakeHeadCoordinates()
+        protected void GetSnakeHeadCoordinates()
         {
             Console.SetCursorPosition(Surface.Width + 5, 4);
             Console.WriteLine($"snake:                   ");
