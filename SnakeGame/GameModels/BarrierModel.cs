@@ -17,7 +17,7 @@ namespace SnakeGame.GameModels
             Position_Y = pos_y;
         }
 
-        public void Display()
+        public void DisplayBarrier()
         {
             Console.SetCursorPosition(Position_X, Position_Y);
             Console.WriteLine("+");

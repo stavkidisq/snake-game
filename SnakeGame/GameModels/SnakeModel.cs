@@ -18,7 +18,9 @@ namespace SnakeGame
             Speed = speed;
 
             if (SnakeLine == null)
+            {
                 SnakeLine = new List<PointModel>();
+            }
         }
 
         public void DisplaySnake()
@@ -46,7 +48,7 @@ namespace SnakeGame
                 (new PointModel(SnakeLine.Last().Position_X, SnakeLine.Last().Position_Y));
         }
 
-        public void Turn(int offset_X, int offset_Y)
+        public void TurnSnake(int offset_X, int offset_Y)
         {
             Console.SetCursorPosition(SnakeLine.First().Position_X, SnakeLine.First().Position_Y);
             Console.WriteLine(' ');
@@ -60,24 +62,24 @@ namespace SnakeGame
             Thread.Sleep(Speed);
         }
 
-        public void ToLeft()
+        public void TurnSnakeToLeft()
         {
-            Turn(SnakeLine.Last().Position_X - 1, SnakeLine.Last().Position_Y);
+            TurnSnake(SnakeLine.Last().Position_X - 1, SnakeLine.Last().Position_Y);
         }
 
-        public void ToRight()
+        public void TurnSnakeToRight()
         {
-            Turn(SnakeLine.Last().Position_X + 1, SnakeLine.Last().Position_Y);
+            TurnSnake(SnakeLine.Last().Position_X + 1, SnakeLine.Last().Position_Y);
         }
 
-        public void ToUp()
+        public void TurnSnakeToUp()
         {
-            Turn(SnakeLine.Last().Position_X, SnakeLine.Last().Position_Y - 1);
+            TurnSnake(SnakeLine.Last().Position_X, SnakeLine.Last().Position_Y - 1);
         }
 
-        public void ToDown()
+        public void TurnSnakeToDown()
         {
-            Turn(SnakeLine.Last().Position_X, SnakeLine.Last().Position_Y + 1);
+            TurnSnake(SnakeLine.Last().Position_X, SnakeLine.Last().Position_Y + 1);
         }
     }
 }

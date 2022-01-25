@@ -9,7 +9,7 @@ namespace SnakeGame.GameModes
 {
     internal class BlockGameOptions : GameOptions
     {
-        List<BarrierModel> _barriers = new List<BarrierModel>();
+        private List<BarrierModel> _barriers = new List<BarrierModel>();
 
         public BlockGameOptions(SnakeModel snakeModel, SurfaceModel surfaceModel, AppleModel appleModel)
         {
@@ -23,7 +23,7 @@ namespace SnakeGame.GameModes
             Surface.DisplaySurface();
             Snake.DisplaySnake();
             Surface.GetScore();
-            Apple.Display();
+            Apple.DisplayApple();
             SpawnBarriers(10);
 
             PlayBarrierSnakeGame();
@@ -34,16 +34,18 @@ namespace SnakeGame.GameModes
         {
             ConsoleKey key = Console.ReadKey().Key;
 
-            while (!CheckSurfaceCollision() && !CheckSnakeCollision() && !CheckSnakeToBarrierCollision())
+            while (!CheckCollisionBetweenSnakeAndSurface() && !CheckSnakeCollision() && !CheckSnakeToBarrierCollision())
             {
                 if (Console.KeyAvailable)
+                {
                     key = Console.ReadKey().Key;
+                }
 
                 if (Snake.TryEatApple(Apple))
                 {
                     Apple = new AppleModel('$');
                     ChangeApplePosition();
-                    Apple.Display();
+                    Apple.DisplayApple();
                     GetSnakeHeadCoordinates();
                     SpawnBarrier();
 
@@ -53,7 +55,7 @@ namespace SnakeGame.GameModes
                     Snake.AddSnakePoint();
                 }
 
-                Control(key);
+                ControlBySnake(key);
             }
         }
 
@@ -67,22 +69,22 @@ namespace SnakeGame.GameModes
 
         private void SpawnBarrier()
         {
-            int x = 0;
-            int y = 0;
+            int x, y;
 
             do
             {
                 x = new Random().Next(1, Surface.Width - 1);
                 y = new Random().Next(1, Surface.Height - 1);
             }
-            while (CheckBarrierCollision(x, y));
+            while(CheckBarrierCollision(x, y));
 
             BarrierModel barrier = new BarrierModel(x, y);
+
             _barriers.Add(barrier);
-            barrier.Display();
+            barrier.DisplayBarrier();
         }
 
-        public bool CheckBarrierCollision(int x, int y)
+        private bool CheckBarrierCollision(int x, int y)
         {
             foreach(var item in Snake.SnakeLine)
             {
@@ -101,8 +103,11 @@ namespace SnakeGame.GameModes
             {
                 foreach(var barrierPoint in _barriers)
                 {
-                    if (snakePoint.Position_X == barrierPoint.Position_X && snakePoint.Position_Y == barrierPoint.Position_Y)
+                    if (snakePoint.Position_X == barrierPoint.Position_X 
+                        && snakePoint.Position_Y == barrierPoint.Position_Y)
+                    {
                         return true;
+                    }
                 }
             }
 

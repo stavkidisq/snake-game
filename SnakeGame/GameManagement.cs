@@ -23,7 +23,6 @@ namespace SnakeGame
             DisplayGameModes();
             var choice2 = InputGameModes();
 
-            //ChoiceGameModes2
             switch (choice2)
             {
                 case Modes.CLASSIC:
