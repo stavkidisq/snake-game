@@ -17,7 +17,7 @@ namespace SnakeGame.GameModels
             Skin = skin;
         }
 
-        public void Display()
+        public void DisplayApple()
         {
             Console.SetCursorPosition(Position_X, Position_Y);
             Console.WriteLine(Skin);

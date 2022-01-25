@@ -21,7 +21,7 @@ namespace SnakeGame.GameModes
             Surface.DisplaySurface();
             Snake.DisplaySnake();
             Surface.GetScore();
-            Apple.Display();
+            Apple.DisplayApple();
 
             PlayClassicSnakeGame();
             EndGame();
@@ -31,7 +31,7 @@ namespace SnakeGame.GameModes
         {
             ConsoleKey key = Console.ReadKey().Key;
 
-            while (!CheckSurfaceCollision() && !CheckSnakeCollision())
+            while (!CheckCollisionBetweenSnakeAndSurface() && !CheckSnakeCollision())
             {
                 if (Console.KeyAvailable)
                     key = Console.ReadKey().Key;
@@ -40,7 +40,7 @@ namespace SnakeGame.GameModes
                 {
                     Apple = new AppleModel('$');
                     ChangeApplePosition();
-                    Apple.Display();
+                    Apple.DisplayApple();
                     GetSnakeHeadCoordinates();
 
                     Surface.Score++;
@@ -49,7 +49,7 @@ namespace SnakeGame.GameModes
                     Snake.AddSnakePoint();
                 }
 
-                Control(key);
+                ControlBySnake(key);
             }
         }
     }
